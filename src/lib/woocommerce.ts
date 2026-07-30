@@ -153,13 +153,14 @@ export async function getCategories(params: {
       params: {
         per_page: 100,
         hide_empty: false,
-        orderby: "menu_order",
+        orderby: "name",
         order: "asc",
         ...params,
       },
     });
     return response.data;
-  } catch {
+  } catch (error) {
+    console.error("[WooCommerce] getCategories error:", error);
     return [];
   }
 }
@@ -181,10 +182,11 @@ export async function getCategoryBySlug(slug: string): Promise<WCCategory | null
 export async function getProductReviews(productId: number): Promise<WCReview[]> {
   try {
     const response = await woocommerce.get<WCReview[]>("/products/reviews", {
-      params: { product: productId, per_page: 20, status: "approved" },
+      params: { product: productId, per_page: 50 },
     });
     return response.data;
-  } catch {
+  } catch (error) {
+    console.error("[WooCommerce] getProductReviews error:", error);
     return [];
   }
 }
