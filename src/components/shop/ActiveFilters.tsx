@@ -1,8 +1,10 @@
-﻿"use client";
+"use client";
 
 import { useRouter, usePathname } from "next/navigation";
 import { X } from "lucide-react";
 import type { WCCategory } from "@/types/product";
+
+import { decodeHtmlEntities } from "@/lib/utils";
 
 interface ActiveFiltersProps {
   currentParams: Record<string, string>;
@@ -24,7 +26,7 @@ export function ActiveFilters({ currentParams, categories }: ActiveFiltersProps)
 
   if (currentParams.category) {
     const cat = categories.find((c) => String(c.id) === currentParams.category);
-    if (cat) activeFilters.push({ key: "category", label: `Category: ${cat.name}` });
+    if (cat) activeFilters.push({ key: "category", label: `Category: ${decodeHtmlEntities(cat.name)}` });
   }
   if (currentParams.min_price) activeFilters.push({ key: "min_price", label: `Min: AED ${currentParams.min_price}` });
   if (currentParams.max_price) activeFilters.push({ key: "max_price", label: `Max: AED ${currentParams.max_price}` });
