@@ -39,11 +39,12 @@ export const getCachedProducts = unstable_cache(
   { tags: [CACHE_TAGS.products], revalidate: 300 }
 );
 
-export const getCachedProduct = unstable_cache(
-  async (slug: string) => getProduct(slug),
-  ["product"],
-  { tags: [CACHE_TAGS.products], revalidate: 300 }
-);
+export const getCachedProduct = (slug: string) =>
+  unstable_cache(
+    async () => getProduct(slug),
+    [`product-${slug}`],
+    { tags: [CACHE_TAGS.products], revalidate: 300 }
+  )();
 
 export const getCachedCategories = unstable_cache(
   async () => getCategories(),
@@ -51,11 +52,12 @@ export const getCachedCategories = unstable_cache(
   { tags: [CACHE_TAGS.categories], revalidate: 3600 }
 );
 
-export const getCachedCategory = unstable_cache(
-  async (slug: string) => getCategoryBySlug(slug),
-  ["category"],
-  { tags: [CACHE_TAGS.categories], revalidate: 3600 }
-);
+export const getCachedCategory = (slug: string) =>
+  unstable_cache(
+    async () => getCategoryBySlug(slug),
+    [`category-${slug}`],
+    { tags: [CACHE_TAGS.categories], revalidate: 3600 }
+  )();
 
 export const getCachedFeaturedProducts = unstable_cache(
   async (perPage?: number) => getFeaturedProducts(perPage),

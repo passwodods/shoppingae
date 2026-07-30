@@ -50,10 +50,21 @@ export async function getProducts(query: WCProductsQuery = {}): Promise<{
 
 export async function getProduct(slug: string): Promise<WCProduct | null> {
   try {
+    const cleanSlug = decodeURIComponent(slug);
     const response = await woocommerce.get<WCProduct[]>("/products", {
-      params: { slug, status: "publish" },
+      params: { slug: cleanSlug },
     });
-    return response.data[0] ?? null;
+    if (response.data && response.data.length > 0) {
+      return response.data[0];
+    }
+    // Search fallback if exact slug param returned empty
+    const fallbackResponse = await woocommerce.get<WCProduct[]>("/products", {
+      params: { search: cleanSlug, per_page: 5 },
+    });
+    const found = fallbackResponse.data?.find(
+      (p) => p.slug === cleanSlug || p.slug === slug || decodeURIComponent(p.slug) === cleanSlug
+    );
+    return found ?? fallbackResponse.data?.[0] ?? null;
   } catch {
     return null;
   }
