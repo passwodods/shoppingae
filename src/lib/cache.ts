@@ -46,11 +46,21 @@ export const getCachedProduct = (slug: string) =>
     { tags: [CACHE_TAGS.products], revalidate: 300 }
   )();
 
-export const getCachedCategories = unstable_cache(
+const getCachedCategoriesInternal = unstable_cache(
   async () => getCategories(),
   ["categories"],
-  { tags: [CACHE_TAGS.categories], revalidate: 3600 }
+  { tags: [CACHE_TAGS.categories], revalidate: 60 }
 );
+
+export async function getCachedCategories(): Promise<any[]> {
+  try {
+    const cached = await getCachedCategoriesInternal();
+    if (cached && cached.length > 0) {
+      return cached;
+    }
+  } catch {}
+  return getCategories();
+}
 
 export const getCachedCategory = (slug: string) =>
   unstable_cache(
@@ -107,7 +117,7 @@ export const getCachedMenus = unstable_cache(
   { tags: [CACHE_TAGS.menus], revalidate: 3600 }
 );
 
-export const getCachedNavMenus = unstable_cache(
+const getCachedNavMenusInternal = unstable_cache(
   async () => {
     const menus = await getMenus();
     const primaryMenu = menus.find(
@@ -124,6 +134,31 @@ export const getCachedNavMenus = unstable_cache(
   ["nav-menus"],
   { tags: [CACHE_TAGS.menus], revalidate: 3600 }
 );
+
+export async function getCachedNavMenus(): Promise<{ primary: any[]; footer: any[] }> {
+  try {
+    const cached = await getCachedNavMenusInternal();
+    if (cached && (cached.primary.length > 0 || cached.footer.length > 0)) {
+      return cached;
+    }
+  } catch {}
+
+  try {
+    const menus = await getMenus();
+    const primaryMenu = menus.find(
+      (m) => m.locations?.includes("PRIMARY") || m.slug === "primary-menu"
+    );
+    const footerMenu = menus.find(
+      (m) => m.locations?.includes("FOOTER") || m.slug === "footer-menu"
+    );
+    return {
+      primary: primaryMenu ? buildMenuTree(primaryMenu.menuItems.nodes) : [],
+      footer: footerMenu ? buildMenuTree(footerMenu.menuItems.nodes) : [],
+    };
+  } catch {
+    return { primary: [], footer: [] };
+  }
+}
 
 export const getCachedHomepageData = unstable_cache(
   async () => getHomepageData(),
