@@ -5,11 +5,18 @@ import type { WCOrder, WCCustomer } from "@/types/customer";
 // ──────────────────────────────────────────────
 // Axios client for WooCommerce REST API v3
 // ──────────────────────────────────────────────
+const consumerKey = process.env.WC_CONSUMER_KEY ?? "";
+const consumerSecret = process.env.WC_CONSUMER_SECRET ?? "";
+
 const woocommerce = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wc/v3`,
+  baseURL: `${process.env.NEXT_PUBLIC_WP_URL ?? "https://shoppingae.com"}/wp-json/wc/v3`,
+  auth:
+    consumerKey && consumerSecret && !consumerKey.includes("placeholder")
+      ? { username: consumerKey, password: consumerSecret }
+      : undefined,
   params: {
-    consumer_key: process.env.WC_CONSUMER_KEY,
-    consumer_secret: process.env.WC_CONSUMER_SECRET,
+    consumer_key: consumerKey,
+    consumer_secret: consumerSecret,
   },
   headers: {
     "Content-Type": "application/json",
