@@ -48,16 +48,7 @@ export default async function HomePage() {
       {/* Trust Badges */}
       <TrustBadges />
 
-      {/* Category Grid */}
-      {topCategories.length > 0 && (
-        <section className="py-12 container-shop">
-          <div className="mb-8 text-center">
-            <h2 className="section-heading">Shop by Category</h2>
-            <p className="section-subheading">Explore our curated collection of health & beauty</p>
-          </div>
-          <CategoryGrid categories={topCategories} />
-        </section>
-      )}
+
 
       {/* Promo Banner */}
       <PromoBanner />
