@@ -97,13 +97,7 @@ export function ProductTabs({ product, reviews }: ProductTabsProps) {
   const featuresContent = useMemo(() => {
     const raw = product.acf?.features_benefits || product.acf?.features;
     if (hasValue(raw)) return raw;
-    return [
-      "Broad-spectrum SPF 50+ UV protection",
-      "Formulated with 3 essential ceramides (1, 3, 6-II)",
-      "Hydrates and restores skin moisture barrier",
-      "Dermatologist recommended & hypoallergenic",
-      "Non-comedogenic formula (won't clog pores)",
-    ];
+    return null;
   }, [product]);
 
   // 2. Description

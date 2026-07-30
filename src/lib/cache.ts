@@ -94,12 +94,22 @@ export const getCachedProductVariations = (productId: number) =>
     { tags: [CACHE_TAGS.products], revalidate: 300 }
   )();
 
-export const getCachedProductReviews = (productId: number) =>
+const getCachedProductReviewsInternal = (productId: number) =>
   unstable_cache(
     async () => getProductReviews(productId),
     [`product-reviews-${productId}`],
     { tags: [CACHE_TAGS.products], revalidate: 60 }
   )();
+
+export async function getCachedProductReviews(productId: number): Promise<any[]> {
+  try {
+    const cached = await getCachedProductReviewsInternal(productId);
+    if (cached && cached.length > 0) {
+      return cached;
+    }
+  } catch {}
+  return getProductReviews(productId);
+}
 
 export const getCachedRelatedProducts = (productId: number, categoryId?: number, perPage?: number) =>
   unstable_cache(
