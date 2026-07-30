@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
@@ -44,20 +44,25 @@ export function ProductFilters({ categories, currentParams }: ProductFiltersProp
           >
             All Categories
           </button>
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => updateFilter("category", String(cat.id))}
-              className={`w-full text-left text-sm px-2 py-1.5 rounded-lg transition-colors flex items-center justify-between ${
-                currentParams.category === String(cat.id)
-                  ? "text-[#2E6F40] bg-green-50 font-semibold"
-                  : "text-gray-600 hover:text-[#2E6F40] hover:bg-green-50"
-              }`}
-            >
-              <span>{cat.name}</span>
-              <span className="text-xs text-gray-400">{cat.count}</span>
-            </button>
-          ))}
+          {categories.map((cat) => {
+            const isChild = cat.parent !== 0;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => updateFilter("category", String(cat.id))}
+                className={`w-full text-left text-sm px-2 py-1.5 rounded-lg transition-colors flex items-center justify-between ${
+                  currentParams.category === String(cat.id)
+                    ? "text-[#2E6F40] bg-green-50 font-semibold"
+                    : "text-gray-600 hover:text-[#2E6F40] hover:bg-green-50"
+                }`}
+              >
+                <span className={isChild ? "pl-3.5 text-gray-500 text-xs font-normal" : ""}>
+                  {isChild ? `• ${cat.name}` : cat.name}
+                </span>
+                <span className="text-xs text-gray-400">{cat.count}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 

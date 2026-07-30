@@ -67,7 +67,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         {/* Sidebar filters */}
         <aside className="hidden lg:block w-64 flex-shrink-0" aria-label="Product filters">
           <ProductFilters
-            categories={topCategories}
+            categories={categories}
             currentParams={params as Record<string, string>}
           />
         </aside>
@@ -88,7 +88,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           </div>
 
           {/* Active filters */}
-          <ActiveFilters currentParams={params as Record<string, string>} categories={topCategories} />
+          <ActiveFilters currentParams={params as Record<string, string>} categories={categories} />
 
           {/* Grid */}
           {products.length > 0 ? (

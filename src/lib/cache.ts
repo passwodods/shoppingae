@@ -77,24 +77,26 @@ export const getCachedNewArrivals = unstable_cache(
   { tags: [CACHE_TAGS.products], revalidate: 300 }
 );
 
-export const getCachedProductVariations = unstable_cache(
-  async (productId: number) => getProductVariations(productId),
-  ["product-variations"],
-  { tags: [CACHE_TAGS.products], revalidate: 300 }
-);
+export const getCachedProductVariations = (productId: number) =>
+  unstable_cache(
+    async () => getProductVariations(productId),
+    [`product-variations-${productId}`],
+    { tags: [CACHE_TAGS.products], revalidate: 300 }
+  )();
 
-export const getCachedProductReviews = unstable_cache(
-  async (productId: number) => getProductReviews(productId),
-  ["product-reviews"],
-  { tags: [CACHE_TAGS.products], revalidate: 60 }
-);
+export const getCachedProductReviews = (productId: number) =>
+  unstable_cache(
+    async () => getProductReviews(productId),
+    [`product-reviews-${productId}`],
+    { tags: [CACHE_TAGS.products], revalidate: 60 }
+  )();
 
-export const getCachedRelatedProducts = unstable_cache(
-  async (productId: number, categoryId?: number, perPage?: number) =>
-    getRelatedProducts(productId, categoryId, perPage),
-  ["related-products"],
-  { tags: [CACHE_TAGS.products], revalidate: 300 }
-);
+export const getCachedRelatedProducts = (productId: number, categoryId?: number, perPage?: number) =>
+  unstable_cache(
+    async () => getRelatedProducts(productId, categoryId, perPage),
+    [`related-products-${productId}-${categoryId || 0}`],
+    { tags: [CACHE_TAGS.products], revalidate: 300 }
+  )();
 
 export const getCachedMenus = unstable_cache(
   async () => {

@@ -144,7 +144,7 @@ export async function getCategories(params: {
     const response = await woocommerce.get<WCCategory[]>("/products/categories", {
       params: {
         per_page: 100,
-        hide_empty: true,
+        hide_empty: false,
         orderby: "menu_order",
         order: "asc",
         ...params,

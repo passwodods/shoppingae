@@ -16,8 +16,10 @@ export default async function ShopLayout({
   ]);
 
   // Fallback to top WooCommerce categories if WPGraphQL navigation menu is empty
-  const categoryNavItems: NavItem[] = (categories || [])
-    .filter((c) => c.parent === 0)
+  const parentCategories = (categories || []).filter((c) => c.parent === 0);
+  const displayCategories = parentCategories.length > 0 ? parentCategories : (categories || []);
+
+  const categoryNavItems: NavItem[] = displayCategories
     .slice(0, 8)
     .map((c) => ({
       id: `cat-${c.id}`,
