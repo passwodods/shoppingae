@@ -14,7 +14,7 @@ const woocommerce = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  timeout: 5000,
+  timeout: 30000,
 });
 
 // ──────────────────────────────────────────────
@@ -40,6 +40,7 @@ export async function getProducts(query: WCProductsQuery = {}): Promise<{
       totalPages: parseInt(response.headers["x-wp-totalpages"] ?? "1"),
     };
   } catch (error) {
+    console.error("[WooCommerce] getProducts error:", error);
     return {
       products: [],
       total: 0,

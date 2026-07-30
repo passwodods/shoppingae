@@ -33,11 +33,12 @@ export const CACHE_TAGS = {
 // ──────────────────────────────────────────────
 // Cached data fetchers (ISR with tags)
 // ──────────────────────────────────────────────
-export const getCachedProducts = unstable_cache(
-  async (query: WCProductsQuery) => getProducts(query),
-  ["products"],
-  { tags: [CACHE_TAGS.products], revalidate: 300 }
-);
+export const getCachedProducts = (query: WCProductsQuery) =>
+  unstable_cache(
+    async () => getProducts(query),
+    [`products-${JSON.stringify(query)}`],
+    { tags: [CACHE_TAGS.products], revalidate: 300 }
+  )();
 
 export const getCachedProduct = (slug: string) =>
   unstable_cache(
@@ -69,23 +70,26 @@ export const getCachedCategory = (slug: string) =>
     { tags: [CACHE_TAGS.categories], revalidate: 3600 }
   )();
 
-export const getCachedFeaturedProducts = unstable_cache(
-  async (perPage?: number) => getFeaturedProducts(perPage),
-  ["featured-products"],
-  { tags: [CACHE_TAGS.products], revalidate: 300 }
-);
+export const getCachedFeaturedProducts = (perPage?: number) =>
+  unstable_cache(
+    async () => getFeaturedProducts(perPage),
+    [`featured-products-${perPage || 0}`],
+    { tags: [CACHE_TAGS.products], revalidate: 300 }
+  )();
 
-export const getCachedBestSellers = unstable_cache(
-  async (perPage?: number) => getBestSellers(perPage),
-  ["bestsellers"],
-  { tags: [CACHE_TAGS.products], revalidate: 300 }
-);
+export const getCachedBestSellers = (perPage?: number) =>
+  unstable_cache(
+    async () => getBestSellers(perPage),
+    [`bestsellers-${perPage || 0}`],
+    { tags: [CACHE_TAGS.products], revalidate: 300 }
+  )();
 
-export const getCachedNewArrivals = unstable_cache(
-  async (perPage?: number) => getNewArrivals(perPage),
-  ["new-arrivals"],
-  { tags: [CACHE_TAGS.products], revalidate: 300 }
-);
+export const getCachedNewArrivals = (perPage?: number) =>
+  unstable_cache(
+    async () => getNewArrivals(perPage),
+    [`new-arrivals-${perPage || 0}`],
+    { tags: [CACHE_TAGS.products], revalidate: 300 }
+  )();
 
 export const getCachedProductVariations = (productId: number) =>
   unstable_cache(
