@@ -69,6 +69,8 @@ export async function getACFFaqs(): Promise<WPFAQItem[]> {
   }
 }
 
+export const getFAQs = getACFFaqs;
+
 export async function getWPPage(slug: string): Promise<{
   title: string;
   content: string;
