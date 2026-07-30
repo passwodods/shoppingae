@@ -69,10 +69,14 @@ export function ProductTabs({ product, reviews }: ProductTabsProps) {
     setSubmitting(true);
     try {
       const newReview = await createReview({ ...data, product_id: product.id });
-      setLocalReviews((prev) => [newReview, ...prev]);
-      reset();
-      setShowReviewForm(false);
-      toast.success("Thank you for your review!");
+      if (newReview) {
+        setLocalReviews((prev) => [newReview, ...prev]);
+        reset();
+        setShowReviewForm(false);
+        toast.success("Thank you for your review!");
+      } else {
+        toast.error("Failed to submit review. Please try again.");
+      }
     } catch {
       toast.error("Failed to submit review. Please try again.");
     } finally {
