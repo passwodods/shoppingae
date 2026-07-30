@@ -16,13 +16,13 @@ export function PromoBanner() {
               Special Offer
             </span>
             <h3 className="text-2xl font-bold leading-tight mb-3">
-              Save up to 40% on<br />Skincare Essentials
+              Save up to 40% on<br />Featured Essentials
             </h3>
             <Link
-              href="/category/skincare-beauty"
+              href="/shop"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-white hover:gap-3 transition-all duration-200 group-hover:text-green-200"
             >
-              Shop Skincare
+              Shop Deals
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -38,13 +38,13 @@ export function PromoBanner() {
               Free Shipping
             </span>
             <h3 className="text-2xl font-bold leading-tight mb-3">
-              Vitamins & Supplements<br />Starting from AED 29
+              Explore Top Brands &<br />Wellness Arrivals
             </h3>
             <Link
-              href="/category/vitamins-supplements"
+              href="/shop"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-white hover:gap-3 transition-all duration-200 group-hover:text-emerald-200"
             >
-              Shop Vitamins
+              Shop All
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

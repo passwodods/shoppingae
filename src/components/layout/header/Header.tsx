@@ -23,13 +23,7 @@ interface HeaderProps {
 }
 
 const DEFAULT_MAIN_MENU: NavItem[] = [
-  { id: "all", label: "All Categories", url: "/shop" },
-  { id: "vitamins", label: "Vitamins & Supplements", url: "/category/vitamins-supplements" },
-  { id: "skincare", label: "Skincare & Beauty", url: "/category/skincare-beauty" },
-  { id: "personal", label: "Personal Care", url: "/category/personal-care" },
-  { id: "baby", label: "Baby & Child", url: "/category/baby-child" },
-  { id: "sports", label: "Sports Nutrition", url: "/category/sports-nutrition" },
-  { id: "medicines", label: "Medicines & Health", url: "/category/medicines-health" },
+  { id: "all", label: "All Products", url: "/shop" },
   { id: "deals", label: "Flash Deals", url: "/shop?on_sale=true" },
 ];
 

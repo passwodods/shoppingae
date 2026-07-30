@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { WCCategory } from "@/types/product";
@@ -18,6 +18,7 @@ const CATEGORY_COLORS = [
 ];
 
 export function CategoryGrid({ categories }: CategoryGridProps) {
+  if (!categories || categories.length === 0) return null;
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
       {categories.slice(0, 12).map((category, i) => (
