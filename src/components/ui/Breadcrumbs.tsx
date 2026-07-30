@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +32,11 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
               {item.label}
             </Link>
           ) : (
-            <span className="text-gray-900 font-medium" aria-current="page">
+            <span
+              className="text-gray-900 font-medium max-w-[200px] sm:max-w-[320px] truncate inline-block align-bottom"
+              aria-current="page"
+              title={item.label}
+            >
               {item.label}
             </span>
           )}

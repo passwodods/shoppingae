@@ -28,7 +28,11 @@ export default async function ShopLayout({
   const primaryItems =
     navMenus.primary && navMenus.primary.length > 0
       ? navMenus.primary
-      : categoryNavItems;
+      : [
+          { id: "all", label: "All Products", url: "/shop" },
+          { id: "deals", label: "Flash Deals", url: "/shop?on_sale=true" },
+          ...categoryNavItems,
+        ];
 
   return (
     <div className="flex flex-col min-h-screen">

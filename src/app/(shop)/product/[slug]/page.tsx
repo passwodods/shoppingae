@@ -46,7 +46,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     ...(product.categories[0]
       ? [{ label: product.categories[0].name, href: `/category/${product.categories[0].slug}` }]
       : []),
-    { label: product.name },
+    { label: product.name.length > 30 ? `${product.name.slice(0, 30)}...` : product.name },
   ];
 
   const jsonLd = [
